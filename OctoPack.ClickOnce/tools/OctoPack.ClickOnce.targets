@@ -28,7 +28,7 @@
 
   <Target Name="Octopack_ClickOnce_Generate_Nuspec">
     <Exec ContinueOnError="True"
-          Command="powershell -ExecutionPolicy ByPass -file ../packages/OctoPack.ClickOnce.1.0.5/tools/GenerateNuSpec.ps1 -MSBuildProjectName &quot;$(MSBuildProjectName)&quot; -MSBuildProjectFile &quot;$(MSBuildProjectFile)&quot; -MSBuildProjectDirectory &quot;$(MSBuildProjectDirectory)&quot; -buildLabel &quot;$(BuildLabel)&quot; -outDir &quot;$(OutDir)\&quot; -verbose"
+          Command="powershell -ExecutionPolicy ByPass -file ../packages/OctoPack.ClickOnce.1.0.6/tools/GenerateNuSpec.ps1 -MSBuildProjectName &quot;$(MSBuildProjectName)&quot; -MSBuildProjectFile &quot;$(MSBuildProjectFile)&quot; -MSBuildProjectDirectory &quot;$(MSBuildProjectDirectory)&quot; -buildLabel &quot;$(BuildLabel)&quot; -outDir &quot;$(OutDir)\&quot; -verbose"
             >
       <Output TaskParameter="exitcode" ItemName="exitcodes"/>
     </Exec>
@@ -87,7 +87,7 @@
     </PropertyGroup>
     <Message Text="C1_OutDir_Rel : $(C1_OutDir_Rel)" />
 
-    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(MSBuildProjectFile)&quot; /t:OctoPack_ClickOnce_BuildC1PackagePerEnv /p:Configuration=$(Configuration);Platform=$(Platform);C1Proj=&quot;$(C1Proj_Abs)&quot;;C1Env=&quot;%(DeploymentEnvironments.Identity)&quot;;C1Path=&quot;$(C1_OutDir_Rel)&quot;" />
+    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(MSBuildProjectFile)&quot; /t:OctoPack_ClickOnce_BuildC1PackagePerEnv /p:Configuration=$(Configuration);Platform=$(Platform);C1Proj=&quot;$(C1Proj_Abs)&quot;;C1Env=&quot;%(DeploymentEnvironments.Identity)&quot;;C1Path=&quot;$(C1_OutDir_Rel)&quot;;OctoPackPackageVersion=&quot;$(OctoPackPackageVersion)&quot;" />
 
     <!-- re-enable and run OctoPack -->
     <PropertyGroup>
