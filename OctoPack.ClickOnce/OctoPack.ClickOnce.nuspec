@@ -30,7 +30,7 @@ v1.0.0 - Initial release.
 	</metadata>
 	<files>
 		<file src="tools\*" target="tools" />
-    <file src="DesploySettings.xml" target="content\DeploySettings.xml"/>
+    <file src="DeploySettings.xml" target="content\DeploySettings.xml"/>
     <file src="DeploySpec.xml" target="content\DeploySpec.xml"/>
 		<file src="LICENSE.txt" />
 	</files>
