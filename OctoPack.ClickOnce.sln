@@ -10,10 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{67B8C0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoPack.ClickOnce", "OctoPack.ClickOnce\OctoPack.ClickOnce.csproj", "{28A8D2D0-289D-4F77-BB17-8FAAEA435961}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoPack.ClickOnce.Example", "OctoPack.ClickOnce.Example\OctoPack.ClickOnce.Example.csproj", "{30C84AD3-A0D6-4182-9E8E-F18D6B51BFD1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoPack.ClickOnce.Example.Deploy", "OctoPack.ClickOnce.Example.Deploy\OctoPack.ClickOnce.Example.Deploy.csproj", "{2D3F5D29-1CF2-4DD5-B791-50DB87E7D835}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,14 +20,6 @@ Global
 		{28A8D2D0-289D-4F77-BB17-8FAAEA435961}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28A8D2D0-289D-4F77-BB17-8FAAEA435961}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28A8D2D0-289D-4F77-BB17-8FAAEA435961}.Release|Any CPU.Build.0 = Release|Any CPU
-		{30C84AD3-A0D6-4182-9E8E-F18D6B51BFD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30C84AD3-A0D6-4182-9E8E-F18D6B51BFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30C84AD3-A0D6-4182-9E8E-F18D6B51BFD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30C84AD3-A0D6-4182-9E8E-F18D6B51BFD1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D3F5D29-1CF2-4DD5-B791-50DB87E7D835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D3F5D29-1CF2-4DD5-B791-50DB87E7D835}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D3F5D29-1CF2-4DD5-B791-50DB87E7D835}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D3F5D29-1CF2-4DD5-B791-50DB87E7D835}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
