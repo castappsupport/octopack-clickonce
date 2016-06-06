@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata minClientVersion="2.8">
+		<id>OctoPack.ClickOnce</id>
+		<title>OctoPack.ClickOnce</title>
+		<version>1.0.0</version>
+
+		<owners>XPO Logistics</owners>
+		<authors>XPO Logistics</authors>
+		<copyright>Copyright © 2016 XPO Logistics. All rights reserved.</copyright>
+
+		<projectUrl>https://github.com/xpologistics/octopack-clickonce</projectUrl>
+		<licenseUrl>https://github.com/xpologistics/octopack-clickonce/LICENSE</licenseUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+		<summary>CLickOnce deploy for OctoPack.</summary>
+		<description>This NuGet package adds an 'OctoPack.ClickOnce' build target to assist with building clickonce applictions in your Visual Studio project.</description>
+		<tags>octopus octopack automation deployment clickonce</tags>
+
+		<releaseNotes>
+			<![CDATA[
+v1.0.0 - Initial release.
+]]>
+		</releaseNotes>
+
+		<dependencies>
+			<dependency id="OctoPack" version="[3.0.60,)" />
+		</dependencies>
+		<developmentDependency>true</developmentDependency>
+	</metadata>
+	<files>
+		<file src="tools\*" target="tools" />
+    <file src="DesploySettings.xml" target="content\DeploySettings.xml"/>
+    <file src="DeploySpec.xml" target="content\DeploySpec.xml"/>
+		<file src="LICENSE.txt" />
+	</files>
+</package>

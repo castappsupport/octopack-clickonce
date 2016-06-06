@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CLIENT_ID</id>
+    <version>$version$</version>
+    <description>CLIENT_DESCRIPTION</description>
+    <authors>AUTHOR</authors>
+  </metadata>
+  <files>
+    <!-- everything into root (exclude this projects' DLL, since it's just a deployment wrapper) -->
+    <file target=""
+          src="@@outdir@@\pkg\Deploy\**\*.*" />
+  </files>
+</package>  

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings ProjectPath="PROJECT_PATH_RELATIVE">
+
+  <Environments>
+    <Environment>ENV_NAME</Environment>
+  </Environments>
+  
+  <Build>
+    <AssemblyName ENV_NAME="ASSEMBLY_NAME_ENV"
+                  />
+    <ConfigFile destination="app.config" mode="Replace"
+                ENV_NAME="app.config"
+                />
+  </Build>
+  
+  <ClickOnce>
+    <PublishLocation ENV_NAME="DEPLOYMENT_URL"
+                     />
+    <ProductName ENV_NAME="APPLICATION_NAME"
+                 />
+  </ClickOnce>
+  
+</Settings>
