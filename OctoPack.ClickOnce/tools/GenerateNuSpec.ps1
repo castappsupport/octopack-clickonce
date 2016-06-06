@@ -109,28 +109,6 @@ function Get-NuGetVersion_Build ( $FunctionParameters ) {
 }
 
 
-
-
-
-
-# Check for override file
-$fnOverrideScript_Abs = $MSBuildProjectDirectory + "\" + $const_FnOverrideScript_File
-if ([System.IO.File]::Exists($fnOverrideScript_Abs))
-{
-    Write-Verbose "Loading function overrides from: $fnOverrideScript_Abs"
-    . $fnOverrideScript_Abs
-}
-else
-{
-    Write-Verbose "Function overrides file not found at: $fnOverrideScript_Abs"
-}
-
-
-
-
-
-
-
 #############################
 ###
 ###  Primary Execution

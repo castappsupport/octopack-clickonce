@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Settings ProjectPath="PROJECT_PATH_RELATIVE">
+<Settings ProjectPath="CS_PROJECT_RELATIVE_PATH">
 
   <Environments>
     <Environment>ENV_NAME</Environment>
