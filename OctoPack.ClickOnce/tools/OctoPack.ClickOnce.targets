@@ -260,7 +260,7 @@
       </Tokens>
     </ItemGroup>
 
-    <Time Format="MMM dd, yyyy HH:mm">
+    <Time Format="MMMM dd, yyyy HH:mm">
       <Output TaskParameter="FormattedTime" PropertyName="PublishTime" />
     </Time>
 
