@@ -15,12 +15,10 @@
     </BuildDependsOn>
   </PropertyGroup>
 
-
   <Target Name="OctoPack_ClickOnce_BeforeBuild">
     <CallTarget Targets="Octopack_ClickOnce_Generate_Nuspec" Condition="$(OctoPack_ClickOnce_Run)" />
     <CallTarget Targets="Octopack_ClickOnce_Configure" Condition="$(OctoPack_ClickOnce_Run)" />
   </Target>
-
 
   <Target Name="OctoPack_ClickOnce_AfterBuild">
     <CallTarget Targets="Octopack_ClickOnce_BuildPackages" Condition="$(OctoPack_ClickOnce_Run)" />
@@ -28,7 +26,7 @@
 
   <Target Name="Octopack_ClickOnce_Generate_Nuspec">
     <Exec ContinueOnError="True"
-          Command="powershell -ExecutionPolicy ByPass -file ../packages/OctoPack.ClickOnce.1.0.6/tools/GenerateNuSpec.ps1 -MSBuildProjectName &quot;$(MSBuildProjectName)&quot; -MSBuildProjectFile &quot;$(MSBuildProjectFile)&quot; -MSBuildProjectDirectory &quot;$(MSBuildProjectDirectory)&quot; -buildLabel &quot;$(BuildLabel)&quot; -outDir &quot;$(OutDir)\&quot; -verbose"
+          Command="powershell -ExecutionPolicy ByPass -file ../packages/OctoPack.ClickOnce.1.0.7/tools/GenerateNuSpec.ps1 -MSBuildProjectName &quot;$(MSBuildProjectName)&quot; -MSBuildProjectFile &quot;$(MSBuildProjectFile)&quot; -MSBuildProjectDirectory &quot;$(MSBuildProjectDirectory)&quot; -buildLabel &quot;$(BuildLabel)&quot; -outDir &quot;$(OutDir)\&quot; -verbose"
             >
       <Output TaskParameter="exitcode" ItemName="exitcodes"/>
     </Exec>
@@ -38,7 +36,6 @@
   </Target>
 
   <Target Name="Octopack_ClickOnce_Configure">
-
     <PropertyGroup>
       <!-- disable octopack (temporarily) -->
       <RunOctoPack>false</RunOctoPack>
@@ -55,9 +52,7 @@
     </XmlPeek>
 
     <Message Text="Environments: @(DeploymentEnvironments)" />
-
   </Target>
-
 
   <Target Name="Octopack_ClickOnce_BuildPackages">
     <Message Text="Building ClickOnce of projects" />
@@ -87,21 +82,20 @@
     </PropertyGroup>
     <Message Text="C1_OutDir_Rel : $(C1_OutDir_Rel)" />
 
-    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(MSBuildProjectFile)&quot; /t:OctoPack_ClickOnce_BuildC1PackagePerEnv /p:Configuration=$(Configuration);Platform=$(Platform);C1Proj=&quot;$(C1Proj_Abs)&quot;;C1Env=&quot;%(DeploymentEnvironments.Identity)&quot;;C1Path=&quot;$(C1_OutDir_Rel)&quot;;OctoPackPackageVersion=&quot;$(OctoPackPackageVersion)&quot;" />
+    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(MSBuildProjectFile)&quot; /t:OctoPack_ClickOnce_BuildC1PackagePerEnv /p:WarningLevel=0;Configuration=$(Configuration);Platform=$(Platform);C1Proj=&quot;$(C1Proj_Abs)&quot;;C1Env=&quot;%(DeploymentEnvironments.Identity)&quot;;C1Path=&quot;$(C1_OutDir_Abs)&quot;;OctoPackPackageVersion=&quot;$(OctoPackPackageVersion)&quot;" />
 
     <!-- re-enable and run OctoPack -->
     <PropertyGroup>
       <RunOctoPack>true</RunOctoPack>
     </PropertyGroup>
 
+    <Message Text="RunOctoPack   : $(RunOctoPack)" />
     <!-- since the targets aren't working directly, the alternative is to simply rerun MSBuild, using the specific target -->
-    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(MSBuildProjectFile)&quot; /t:OctoPack /p:Configuration=$(Configuration);Platform=$(Platform);RunOctoPack=true;TargetPath=&quot;$(TargetPath)&quot;;OctoPackPackageVersion=&quot;$(OctoPackPackageVersion)&quot;;OctoPackPublishPackageToFileShare=&quot;$(OctoPackPublishPackageToFileShare)&quot;;OctoPackPublishPackageToHttp=&quot;$(OctoPackPublishPackageToHttp)&quot;;OctoPackPublishApiKey=&quot;$(OctoPackPublishApiKey)&quot;" />
+    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(MSBuildProjectFile)&quot; /t:OctoPack /p:WarningLevel=0;Configuration=$(Configuration);Platform=$(Platform);RunOctoPack=true;TargetPath=&quot;$(TargetPath)&quot;;OctoPackPackageVersion=&quot;$(OctoPackPackageVersion)&quot;;OctoPackPublishPackageToFileShare=&quot;$(OctoPackPublishPackageToFileShare)&quot;;OctoPackPublishPackageToHttp=&quot;$(OctoPackPublishPackageToHttp)&quot;;OctoPackPublishApiKey=&quot;$(OctoPackPublishApiKey)&quot;" />
     <!--
     <CallTarget Targets="OctoPack" />
--->
-
+	-->
   </Target>
-
 
   <Target Name="OctoPack_ClickOnce_BuildC1PackagePerEnv">
     <!-- this target is called from OctoPlus_ClickOnce_BuildC1Package, for each ClickOnce environment. -->
@@ -184,8 +178,12 @@
     <XmlPoke XmlInputPath="$(C1Proj)"
              Namespaces="&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003' /&gt;"
              Query="/msb:Project/msb:PropertyGroup/msb:PublishUrl"
-             Value="$(C1_PublishLocation_Formatted)"
-             />
+             Value="$(C1_PublishLocation_Formatted)"/>
+
+    <XmlPoke XmlInputPath="$(C1Proj)"
+             Namespaces="&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003' /&gt;"
+             Query="/msb:Project/msb:PropertyGroup/msb:InstallUrl"
+             Value="$(C1_PublishLocation_Formatted)"/>
     <!-- apply environment config file -->
     <Copy SourceFiles="$(C1_EnvConfigFile)" DestinationFiles="$(C1_ConfigFileDestination)" Condition=" '$(C1_ConfigFileMode)' == 'Replace' " />
 
@@ -194,7 +192,25 @@
     <Copy SourceFiles="$(C1Proj)" DestinationFiles="$(C1Proj).$(C1Env)"       />
 
     <!-- msbuild -->
-    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(C1Proj)&quot; /t:Clean;SetGenerateManifests;Build;PublishOnly /p:Configuration=$(Configuration);Platform=$(Platform);OutDir=$(C1Path)\pkg\Build\$(C1Env);PublishDir=$(C1Path)\pkg\Deploy\$(C1Env)\" />
+    <Exec Command="&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\bin\MSBuild.exe&quot; &quot;$(C1Proj)&quot; /t:Clean;SetGenerateManifests;Build;PublishOnly /p:WarningLevel=0;Configuration=$(Configuration);Platform=$(Platform);OutDir=$(C1Path)\pkg\Build\$(C1Env);PublishDir=$(C1Path)\pkg\Deploy\$(C1Env)\" />
+
+    <PropertyGroup>
+      <C1_BuildConifigFile>$(C1Path)\pkg\Build\$(C1Env)\$(C1_AssemblyName).exe.config</C1_BuildConifigFile>
+    </PropertyGroup>
+    <Message Text="C1_BuildConifigFile    : $(C1_BuildConifigFile)" />
+
+    <PropertyGroup>
+      <VersionWithUnderscore>$(C1_Version.Replace(".","_"))</VersionWithUnderscore>
+    </PropertyGroup>
+    <Message Text="VersionWithUnderscore  : $(VersionWithUnderscore)" />
+
+    <PropertyGroup>
+      <C1_DeployConifigFile>$(C1Path)\pkg\Deploy\$(C1Env)\Application Files\$(C1_AssemblyName)_$(VersionWithUnderscore)\$(C1_AssemblyName).exe.config.deploy</C1_DeployConifigFile>
+    </PropertyGroup>
+    <Message Text="C1_DeployConifigFile   : $(C1_DeployConifigFile)" />
+
+    <!-- copy modified config file to deploy folder -->
+    <Copy SourceFiles="$(C1_BuildConifigFile)" DestinationFiles="$(C1_DeployConifigFile)" />
 
     <!-- delete modified proj, and environment-specific config file -->
     <Exec Command="del &quot;$(C1Proj)&quot;" />
@@ -206,5 +222,56 @@
     <Exec Command="del &quot;$(C1Proj).Backup&quot;" />
     <Exec Command="del &quot;$(C1_ConfigFileDestination).Backup&quot;" />
 
+    <Message Text="C1Env                 : $(C1Env)" />
+    <Message Text="C1Path                : $(C1Path)" />
+    <Message Text="C1Proj                : $(C1Proj)" />
+
+    <PropertyGroup>
+      <C1_TemplateFileName>../packages/OctoPack.ClickOnce.1.0.7/tools/clickonce.template.html</C1_TemplateFileName>
+    </PropertyGroup>
+    <Message Text="C1_TemplateFileName   : $(C1_TemplateFileName)" />
+
+    <PropertyGroup>
+      <C1_PublishFileName>$(C1Path)\pkg\Deploy\$(C1Env)\default.html</C1_PublishFileName>
+    </PropertyGroup>
+    <Message Text="C1_PublishFileName    : $(C1_PublishFileName)" />
+
+    <PropertyGroup>
+      <C1_ClickOnceFileName>$(C1_AssemblyName).application</C1_ClickOnceFileName>
+    </PropertyGroup>
+    <Message Text="C1_ClickOnceFileName  : $(C1_ClickOnceFileName)" />
+
+    <ItemGroup>
+      <Tokens Include="PublisherName">
+        <ReplacementValue>$(PublisherName)</ReplacementValue>
+        <Visible>false</Visible>
+      </Tokens>
+      <Tokens Include="ProductName">
+        <ReplacementValue>%(C1_ProductName.Identity)</ReplacementValue>
+        <Visible>false</Visible>
+      </Tokens>
+      <Tokens Include="ApplicationVersion">
+        <ReplacementValue>$(OctoPackPackageVersion)</ReplacementValue>
+        <Visible>false</Visible>
+      </Tokens>
+      <Tokens Include="ClickOnceFileName">
+        <ReplacementValue>$(C1_ClickOnceFileName)</ReplacementValue>
+        <Visible>false</Visible>
+      </Tokens>
+    </ItemGroup>
+
+    <Time Format="dd/MM/yyyy HH:mm">
+      <Output TaskParameter="FormattedTime" PropertyName="PublishTime" />
+    </Time>
+
+    <Message Text="PublisherName         : $(PublisherName)" />
+    <Message Text="ProductName           : %(C1_ProductName.Identity)" />
+    <Message Text="ApplicationVersion    : $(OctoPackPackageVersion)" />
+    <Message Text="ClickOnceFileName     : $(C1_ClickOnceFileName)" />
+    <Message Text="PublishTime           : $(PublishTime)" />
+
+    <!-- Finalise the publish.htm template file and copy it to the publish location -->
+    <TemplateFile Template="$(C1_TemplateFileName)" Tokens="@(Tokens)" OutputFilename="$(C1_PublishFileName)" />
+    <FileUpdate Files="$(C1_PublishFileName)" Regex="\${PublishTime}" ReplacementText="$(PublishTime)" />
   </Target>
 </Project>
