@@ -26,7 +26,7 @@
 
   <Target Name="Octopack_ClickOnce_Generate_Nuspec">
     <Exec ContinueOnError="True"
-          Command="powershell -ExecutionPolicy ByPass -file ../packages/OctoPack.ClickOnce.1.0.11/tools/GenerateNuSpec.ps1 -MSBuildProjectName &quot;$(MSBuildProjectName)&quot; -MSBuildProjectFile &quot;$(MSBuildProjectFile)&quot; -MSBuildProjectDirectory &quot;$(MSBuildProjectDirectory)&quot; -buildLabel &quot;$(BuildLabel)&quot; -outDir &quot;$(OutDir)\&quot; -verbose"
+          Command="powershell -ExecutionPolicy ByPass -file ../packages/OctoPack.ClickOnce.1.0.12/tools/GenerateNuSpec.ps1 -MSBuildProjectName &quot;$(MSBuildProjectName)&quot; -MSBuildProjectFile &quot;$(MSBuildProjectFile)&quot; -MSBuildProjectDirectory &quot;$(MSBuildProjectDirectory)&quot; -buildLabel &quot;$(BuildLabel)&quot; -outDir &quot;$(OutDir)\&quot; -verbose"
             >
       <Output TaskParameter="exitcode" ItemName="exitcodes"/>
     </Exec>
@@ -227,7 +227,7 @@
     <Message Text="C1Proj                : $(C1Proj)" />
 
     <PropertyGroup>
-      <C1_TemplateFileName>../packages/OctoPack.ClickOnce.1.0.11/tools/clickonce.template.html</C1_TemplateFileName>
+      <C1_TemplateFileName>../packages/OctoPack.ClickOnce.1.0.12/tools/clickonce.template.html</C1_TemplateFileName>
     </PropertyGroup>
     <Message Text="C1_TemplateFileName   : $(C1_TemplateFileName)" />
 
